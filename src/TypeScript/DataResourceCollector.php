@@ -8,6 +8,7 @@ use Momentum\Lock\Data\DataResource;
 use ReflectionClass;
 use Spatie\TypeScriptTransformer\Collectors\Collector;
 use Spatie\TypeScriptTransformer\Structures\TransformedType;
+use Spatie\TypeScriptTransformer\TypeReflectors\ClassTypeReflector;
 
 class DataResourceCollector extends Collector
 {
@@ -19,6 +20,7 @@ class DataResourceCollector extends Collector
 
         $transformer = new DataResourceTransformer($this->config);
 
-        return $transformer->transform($class, $class->getShortName());
+        $reflector = ClassTypeReflector::create($class);
+        return $transformer->transform($reflector->getReflectionClass(), $reflector->getName());
     }
 }
